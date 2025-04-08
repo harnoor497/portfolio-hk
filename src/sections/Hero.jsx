@@ -294,7 +294,7 @@ const Hero = () => {
               >
                 <Box
                   component="img"
-                  src="/public/images/projects/profile.jpg"
+                  src="/images/projects/profile.jpg"
                   alt="Profile"
                   sx={{
                     width: '100%',
