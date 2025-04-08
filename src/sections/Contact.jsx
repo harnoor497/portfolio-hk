@@ -13,6 +13,8 @@ import {
 import {
   GitHub as GitHubIcon,
   LinkedIn as LinkedInIcon,
+  Email as EmailIcon,
+  LocationOn as LocationIcon,
 } from '@mui/icons-material';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
@@ -29,6 +31,16 @@ const socialLinks = [
     name: 'LinkedIn',
     icon: <LinkedInIcon />,
     url: 'https://www.linkedin.com/in/harnoorkaur1009/',
+  },
+  {
+    name: 'Email',
+    icon: <EmailIcon />,
+    url: 'mailto:harnoor1009@gmail.com',
+  },
+  {
+    name: 'Location',
+    icon: <LocationIcon />,
+    url: 'https://www.google.com/maps/place/Surrey,+BC,+Canada',
   },
 ];
 
@@ -172,7 +184,7 @@ const Contact = () => {
                     <IconButton
                       key={link.name}
                       href={link.url}
-                      target="_blank"
+                      target={link.name === 'Location' ? '_blank' : '_self'}
                       rel="noopener noreferrer"
                       sx={{
                         color: 'text.secondary',
