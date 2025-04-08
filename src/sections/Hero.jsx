@@ -221,7 +221,7 @@ const Hero = () => {
                   color="primary"
                   size="large"
                   startIcon={<DescriptionIcon />}
-                  href="https://docs.google.com/document/d/1JvGrMTm-M8SG8cMWs8FtiPEDxl5WOXW_GpgjIjDgQZM/edit?usp=sharing"
+                  href="https://drive.google.com/file/d/1Nda3epUWG6xLNm3LnqhIZA2wvTwcDBOL/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
