@@ -17,6 +17,7 @@ import {
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const socialLinks = [
   {
@@ -30,6 +31,9 @@ const socialLinks = [
     url: 'https://www.linkedin.com/in/harnoorkaur1009/',
   },
 ];
+
+// Initialize EmailJS with your public key
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -50,7 +54,7 @@ const Contact = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Get form data
@@ -81,28 +85,32 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      // Create email body
-      const emailBody = `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-      `;
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: name,
+          from_email: email,
+          message: message,
+          to_name: "Harnoor",
+          reply_to: email,
+        }
+      );
 
-      // Create mailto link
-      const mailtoLink = `mailto:harnoor1009@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
-      
-      // Open default email client
-      window.location.href = mailtoLink;
-      
-      // Show success message
-      setSnackbar({
-        open: true,
-        message: 'Your message has been sent successfully! Will be back to you soon.',
-        severity: 'success',
-      });
-      
-      // Reset form
-      e.target.reset();
+      if (result.status === 200) {
+        // Show success message
+        setSnackbar({
+          open: true,
+          message: 'Your message has been sent successfully! Will be back to you soon.',
+          severity: 'success',
+        });
+        
+        // Reset form
+        e.target.reset();
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
       console.error('Error sending email:', error);
       setSnackbar({

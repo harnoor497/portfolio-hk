@@ -9,6 +9,8 @@ import {
   Chip,
   IconButton,
   useTheme,
+  Tooltip,
+  SvgIcon,
 } from '@mui/material';
 import {
   GitHub as GitHubIcon,
@@ -19,13 +21,14 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
-    title: 'SecureShare',
+    title: 'Homies',
     description:
-      'A secure web application for file sharing with MFA, RBAC, and encrypted file uploads.',
-    tags: ['React', 'Redux', 'Python', 'Django', 'SQLite', 'Docker'],
-    github: 'https://github.com/harnoor497/secure-file-share-frontend',
-    demo: '#',
-    image: '/images/projects/secure-share.jpg',
+      'A platform connecting international students looking to rent rooms or find roommates in new cities. Features secure user authentication, room listings, and roommate matching.',
+    tags: ['React', 'Node.js', 'MongoDB', 'Express', 'Material-UI', 'JWT'],
+    // github: 'https://github.com/harnoorkaur/homies',
+    demo: 'https://www.figma.com/design/tbMe3nAFlyck6hJEB9BDqu/Homies-Prototype?node-id=0-1&p=f&t=BkJpi5xtKzi0HvOq-0',
+    figma: 'https://www.figma.com/design/tbMe3nAFlyck6hJEB9BDqu/Homies-Prototype?node-id=0-1&p=f&t=BkJpi5xtKzi0HvOq-0',
+    image: '/images/projects/homies.jpg',
   },
   {
     title: 'WellQuest',
@@ -33,7 +36,8 @@ const projects = [
       'A native mobile app for gym trainers to track client progress with OpenAI and Google Vision APIs.',
     tags: ['React Native', 'Expo', 'MongoDB', 'AWS EC2', 'OpenAI'],
     github: 'https://github.com/bhardwajaman1998/wellquest-backend',
-    demo: '#',
+    demo: 'https://www.figma.com/design/aPyRqv8ybxoZzyHss3OvUJ/Wireframes-and-mockups?node-id=2312-9&p=f&t=0jBEZ7OKNx68pYdg-0',
+    figma: 'https://www.figma.com/design/aPyRqv8ybxoZzyHss3OvUJ/Wireframes-and-mockups?node-id=2312-9&p=f&t=0jBEZ7OKNx68pYdg-0',
     image: '/images/projects/wellquest.jpg',
   },
   {
@@ -43,6 +47,7 @@ const projects = [
     tags: ['React', 'Express', 'MongoDB', 'Node.js', 'Microsoft IIS'],
     github: 'https://github.com/azim763/pawguard',
     demo: 'https://langara-my.sharepoint.com/:v:/r/personal/hcheng40_mylangara_ca/Documents/Project2-WMDD4980/Week%2011%20(Nov%2018)/PetGuard-AlphaReport.mp4?csf=1&web=1&e=hMr4Rn&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D',
+    figma: 'https://www.figma.com/design/51QYXFMqxywWD1HZYxZI9H/Pawguard-Wireframes?node-id=1342-13149&p=f&t=9ehtAXYvoj91ITV0-0', 
     image: '/images/projects/pawguard.jpg',
   },
   {
@@ -51,10 +56,22 @@ const projects = [
       'A Progressive Web Application for efficient task and activity planning.',
     tags: ['HTML', 'CSS', 'JavaScript', 'Firebase'],
     github: 'https://github.com/harnoor497/IntegratedProject',
-    demo: '#',
+    demo: 'https://www.figma.com/design/EuVzZ7jaBNGDA85ltOXHlO/Project-1?node-id=339-25687&p=f&t=5D3gxyWG3GsPCWux-0',
+    figma: 'https://www.figma.com/design/EuVzZ7jaBNGDA85ltOXHlO/Project-1?node-id=339-25687&p=f&t=5D3gxyWG3GsPCWux-0',
     image: '/images/projects/smartpack.jpg',
   },
 ];
+
+// Define Figma icon as a custom component
+const FigmaIcon = () => (
+  <SvgIcon>
+    <path d="M8,24 C10.208,24 12,22.208 12,20 C12,17.792 10.208,16 8,16 C5.792,16 4,17.792 4,20 C4,22.208 5.792,24 8,24 Z" />
+    <path d="M8,16 C10.208,16 12,14.208 12,12 C12,9.792 10.208,8 8,8 C5.792,8 4,9.792 4,12 C4,14.208 5.792,16 8,16 Z" />
+    <path d="M16,8 C13.792,8 12,9.792 12,12 C12,14.208 13.792,16 16,16 C18.208,16 20,14.208 20,12 C20,9.792 18.208,8 16,8 Z" />
+    <path d="M8,8 C10.208,8 12,6.208 12,4 C12,1.792 10.208,0 8,0 C5.792,0 4,1.792 4,4 C4,6.208 5.792,8 8,8 Z" />
+    <path d="M16,0 C13.792,0 12,1.792 12,4 C12,6.208 13.792,8 16,8 C18.208,8 20,6.208 20,4 C20,1.792 18.208,0 16,0 Z" />
+  </SvgIcon>
+);
 
 const Projects = () => {
   const theme = useTheme();
@@ -283,40 +300,63 @@ const Projects = () => {
                     pt: 0,
                     borderTop: '1px solid',
                     borderColor: isDark ? 'rgba(59,130,246,0.2)' : 'rgba(37,99,235,0.2)',
+                    gap: 1,
                   }}
                 >
-                  <IconButton
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: 'text.secondary',
-                      fontSize: '1.5rem',
-                      '&:hover': {
-                        color: 'primary.main',
-                        transform: 'translateY(-2px)',
-                      },
-                      transition: 'all 0.2s ease-in-out',
-                    }}
-                  >
-                    <GitHubIcon fontSize="inherit" />
-                  </IconButton>
-                  <IconButton
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: 'text.secondary',
-                      fontSize: '1.5rem',
-                      '&:hover': {
-                        color: 'primary.main',
-                        transform: 'translateY(-2px)',
-                      },
-                      transition: 'all 0.2s ease-in-out',
-                    }}
-                  >
-                    <LaunchIcon fontSize="inherit" />
-                  </IconButton>
+                  <Tooltip title="View on GitHub">
+                    <IconButton
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        color: 'text.secondary',
+                        fontSize: '1.5rem',
+                        '&:hover': {
+                          color: 'primary.main',
+                          transform: 'translateY(-2px)',
+                        },
+                        transition: 'all 0.2s ease-in-out',
+                      }}
+                    >
+                      <GitHubIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="View Figma Design">
+                    <IconButton
+                      href={project.figma}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        color: 'text.secondary',
+                        fontSize: '1.5rem',
+                        '&:hover': {
+                          color: 'primary.main',
+                          transform: 'translateY(-2px)',
+                        },
+                        transition: 'all 0.2s ease-in-out',
+                      }}
+                    >
+                      <FigmaIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="View Live Demo">
+                    <IconButton
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        color: 'text.secondary',
+                        fontSize: '1.5rem',
+                        '&:hover': {
+                          color: 'primary.main',
+                          transform: 'translateY(-2px)',
+                        },
+                        transition: 'all 0.2s ease-in-out',
+                      }}
+                    >
+                      <LaunchIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
                 </CardActions>
               </Card>
             </motion.div>

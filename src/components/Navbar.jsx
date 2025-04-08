@@ -74,6 +74,8 @@ const Navbar = () => {
               fontWeight: 700,
               color: 'primary.main',
               textDecoration: 'none',
+              position: 'absolute',
+              left: { md: '24px' },
             }}
           >
             HK
@@ -146,10 +148,12 @@ const Navbar = () => {
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
+              flexGrow: 0,
               fontWeight: 700,
               color: 'primary.main',
               textDecoration: 'none',
+              position: 'absolute',
+              right: '24px',
             }}
           >
             HK

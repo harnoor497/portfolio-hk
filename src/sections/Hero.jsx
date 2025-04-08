@@ -3,10 +3,37 @@ import { Box, Container, Typography, Button, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useTheme } from '@mui/material/styles';
+import Typed from 'typed.js';
+import { useEffect, useRef } from 'react';
 
 const Hero = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const typedRef = useRef(null);
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [
+        'System Engineer',
+        'Full Stack Developer',
+        'Web Developer',
+        'Software Engineer'
+      ],
+      typeSpeed: 50,
+      backSpeed: 50,
+      backDelay: 1000,
+      loop: true,
+      showCursor: true,
+      cursorChar: '|'
+    });
+
+    typedRef.current = typed;
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   return (
     <Box
@@ -21,6 +48,7 @@ const Hero = () => {
           : 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)',
         position: 'relative',
         overflow: 'hidden',
+        pt: { xs: '80px', md: '100px' }, // Add top padding to account for navbar
       }}
     >
       {/* Background Tech Pattern */}
@@ -42,7 +70,9 @@ const Hero = () => {
       <Container 
         maxWidth="lg"
         sx={{
-          px: { xs: 2, md: 4 }, // Reduced padding
+          px: { xs: 2, md: 4 },
+          position: 'relative', // Add this
+          zIndex: 1, // Add this to ensure content is above background
         }}
       >
         <Grid 
@@ -61,7 +91,9 @@ const Hero = () => {
             md={7}
             sx={{
               textAlign: { xs: 'center', md: 'left' },
-              pr: { md: 4 }, // Add padding right on desktop
+              pr: { md: 4 },
+              position: 'relative', // Add this
+              zIndex: 2, // Add this to ensure content is above image
             }}
           >
             <motion.div
@@ -77,6 +109,7 @@ const Hero = () => {
                   mb: 2, 
                   letterSpacing: 2,
                   fontSize: '1rem',
+                  display: { xs: 'none', md: 'block' }, // Hide on mobile
                 }}
               >
                 Hi, my name is
@@ -116,9 +149,23 @@ const Hero = () => {
                   fontWeight: 600,
                   mb: 3,
                   lineHeight: 1.2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: { xs: 'center', md: 'flex-start' },
+                  gap: 1,
                 }}
               >
-                I build things for the web.
+                I'm a{' '}
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'primary.main',
+                    minWidth: { xs: '200px', md: '300px' },
+                    display: 'inline-block',
+                  }}
+                >
+                  <span ref={el} />
+                </Box>
               </Typography>
             </motion.div>
 
@@ -136,8 +183,9 @@ const Hero = () => {
                   lineHeight: 1.6,
                 }}
               >
-                I'm a software engineer specializing in building exceptional digital experiences.
-                Currently, I'm focused on building accessible, human-centered products.
+                Passionate about creating innovative solutions and transforming ideas into reality.
+                I specialize in building modern web applications with a focus on user experience,
+                performance, and scalability.
               </Typography>
             </motion.div>
 
@@ -200,6 +248,8 @@ const Hero = () => {
               justifyContent: 'center',
               alignItems: 'center',
               mb: { xs: 4, md: 0 },
+              position: 'relative', // Add this
+              zIndex: 1, // Add this
             }}
           >
             <motion.div
@@ -208,7 +258,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.5 }}
               style={{
                 width: '100%',
-                maxWidth: '400px', // Reduced from 500px to 400px
+                maxWidth: { xs: '280px', sm: '320px', md: '400px' }, // Adjust image size
                 aspectRatio: '1/1',
                 position: 'relative',
               }}
