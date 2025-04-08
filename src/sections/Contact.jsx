@@ -17,7 +17,7 @@ import {
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
+import { useForm, ValidationError } from '@formspree/react';
 
 const socialLinks = [
   {
@@ -32,20 +32,12 @@ const socialLinks = [
   },
 ];
 
-// Initialize EmailJS with your public key
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-
 const Contact = () => {
-  const [loading, setLoading] = useState(false);
+  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ENDPOINT);
   const [formErrors, setFormErrors] = useState({
     name: false,
     email: false,
     message: false,
-  });
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'success',
   });
 
   // Email validation function
@@ -54,13 +46,13 @@ const Contact = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     
     // Get form data
     const formData = new FormData(e.target);
-    const name = formData.get('user_name');
-    const email = formData.get('user_email');
+    const name = formData.get('name');
+    const email = formData.get('email');
     const message = formData.get('message');
     
     // Validate form data
@@ -74,57 +66,11 @@ const Contact = () => {
     
     // Check if there are any errors
     if (errors.name || errors.email || errors.message) {
-      setSnackbar({
-        open: true,
-        message: 'Please fill in all fields correctly',
-        severity: 'error',
-      });
       return;
     }
     
-    setLoading(true);
-
-    try {
-      // Send email using EmailJS
-      const result = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: name,
-          from_email: email,
-          message: message,
-          to_name: "Harnoor",
-          reply_to: email,
-        }
-      );
-
-      if (result.status === 200) {
-        // Show success message
-        setSnackbar({
-          open: true,
-          message: 'Your message has been sent successfully! Will be back to you soon.',
-          severity: 'success',
-        });
-        
-        // Reset form
-        e.target.reset();
-      } else {
-        throw new Error('Failed to send message');
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
-      setSnackbar({
-        open: true,
-        message: 'Failed to send message. Please try again later.',
-        severity: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
+    // Submit the form using FormSpree
+    await handleSubmit(e);
   };
 
   return (
@@ -205,7 +151,6 @@ const Contact = () => {
                   flexDirection: 'column',
                   gap: 2.5,
                   alignItems: 'center',
-                  // textAlign: 'center',
                 }}
               >
                 <Typography
@@ -221,19 +166,6 @@ const Contact = () => {
                   I'm currently looking for new opportunities. Whether you have a
                   question or just want to say hi, I'll try my best to get back to you!
                 </Typography>
-                
-                <Box sx={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  gap: 1.5,
-                }}>
-                  {/* <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    Email: harnoor1009@gmail.com
-                  </Typography>
-                  <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    Location: Surrey, British Columbia
-                  </Typography> */}
-                </Box>
 
                 <Box sx={{ display: 'flex', gap: 2 }}>
                   {socialLinks.map((link) => (
@@ -278,7 +210,7 @@ const Contact = () => {
                   </Typography>
                   <Box
                     component="form"
-                    onSubmit={handleSubmit}
+                    onSubmit={handleFormSubmit}
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -289,7 +221,7 @@ const Contact = () => {
                   >
                     <TextField
                       label="Name"
-                      name="user_name"
+                      name="name"
                       variant="outlined"
                       required
                       fullWidth
@@ -306,7 +238,7 @@ const Contact = () => {
                     />
                     <TextField
                       label="Email"
-                      name="user_email"
+                      name="email"
                       type="email"
                       variant="outlined"
                       required
@@ -345,7 +277,7 @@ const Contact = () => {
                       variant="contained"
                       size="medium"
                       type="submit"
-                      disabled={loading}
+                      disabled={state.submitting}
                       sx={{ 
                         alignSelf: 'flex-start',
                         backgroundColor: 'primary.main',
@@ -359,7 +291,7 @@ const Contact = () => {
                         transition: 'all 0.3s ease-in-out',
                       }}
                     >
-                      {loading ? 'Processing...' : 'Send Message'}
+                      {state.submitting ? 'Processing...' : 'Send Message'}
                     </Button>
                   </Box>
                 </Paper>
@@ -370,17 +302,24 @@ const Contact = () => {
       </Container>
 
       <Snackbar
-        open={snackbar.open}
+        open={state.succeeded}
         autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
+        onClose={() => {}}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Your message has been sent successfully! Will be back to you soon.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={state.errors && state.errors.length > 0}
+        autoHideDuration={6000}
+        onClose={() => {}}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="error" sx={{ width: '100%' }}>
+          Failed to send message. Please try again later.
         </Alert>
       </Snackbar>
     </Box>

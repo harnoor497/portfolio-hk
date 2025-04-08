@@ -221,7 +221,7 @@ const Hero = () => {
                   color="primary"
                   size="large"
                   startIcon={<DescriptionIcon />}
-                  href="/src/assets/HarnoorKaurResume.pdf"
+                  href="https://docs.google.com/document/d/1JvGrMTm-M8SG8cMWs8FtiPEDxl5WOXW_GpgjIjDgQZM/edit?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{

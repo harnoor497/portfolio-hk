@@ -8,7 +8,7 @@ A modern, responsive portfolio website showcasing my skills, projects, and profe
 - **Dark/Light Mode**: Toggle between dark and light themes
 - **Animated Elements**: Smooth animations and transitions for a better user experience
 - **Interactive Projects**: Showcase of my work with detailed descriptions and links
-- **Contact Form**: Integrated contact form using EmailJS
+- **Contact Form**: Integrated contact form using FormSpree
 - **Modern UI**: Clean, professional design with Material-UI components
 
 ## 🛠️ Technologies Used
@@ -16,7 +16,7 @@ A modern, responsive portfolio website showcasing my skills, projects, and profe
 - **Frontend**: React.js, Vite
 - **Styling**: Material-UI, CSS-in-JS
 - **Animations**: Framer Motion, Typed.js
-- **Email Service**: EmailJS
+- **Form Handling**: FormSpree
 - **Deployment**: Cloudfare Pages
 
 ## 📋 Sections
@@ -49,11 +49,9 @@ A modern, responsive portfolio website showcasing my skills, projects, and profe
    yarn install
    ```
 
-3. Create a `.env` file in the root directory with your EmailJS credentials
+3. Create a `.env` file in the root directory with your FormSpree endpoint
    ```
-   VITE_EMAILJS_PUBLIC_KEY=your_public_key
-   VITE_EMAILJS_SERVICE_ID=your_service_id
-   VITE_EMAILJS_TEMPLATE_ID=your_template_id
+   VITE_FORMSPREE_ENDPOINT=your_formspree_endpoint
    ```
 
 4. Start the development server
@@ -80,7 +78,7 @@ The build artifacts will be stored in the `dist/` directory.
 - **Projects**: Update the projects array in `src/sections/Projects.jsx`
 - **Skills**: Modify the skills in `src/sections/Skills.jsx`
 - **Education**: Update education details in `src/sections/Education.jsx`
-- **Contact**: Configure EmailJS in `src/sections/Contact.jsx`
+- **Contact**: Configure FormSpree endpoint in `src/sections/Contact.jsx`
 - **Theme**: Customize colors and theme in `src/context/ThemeContext.jsx`
 
 ## 📄 License
