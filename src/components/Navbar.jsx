@@ -9,20 +9,26 @@ import {
   Container,
   Button,
   MenuItem,
+  useTheme as useMuiTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useTheme } from '../context/ThemeContext';
 
 const pages = [
   { name: 'Projects', href: '#projects' },
   { name: 'Skills', href: '#skills' },
-  { name: 'Education', href: '#education' },
-  { name: 'Experience', href: '#experience' },
+  { name: 'Education', href: '#education-experience' },
+  { name: 'Experience', href: '#education-experience' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const { mode, toggleTheme } = useTheme();
+  const muiTheme = useMuiTheme();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -108,10 +114,27 @@ const Navbar = () => {
                   onClick={handleCloseNavMenu}
                   component="a"
                   href={page.href}
+                  sx={{
+                    fontSize: '1.15rem',
+                  }}
                 >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem 
+                onClick={toggleTheme}
+                sx={{
+                  fontSize: '1.15rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                {mode === 'dark' ? <Brightness7Icon fontSize="small" /> : <Brightness4Icon fontSize="small" />}
+                <Typography textAlign="center">
+                  {mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
 
@@ -143,6 +166,9 @@ const Navbar = () => {
                   color: 'text.primary',
                   display: 'block',
                   mx: 1,
+                  fontSize: '1.15rem',
+                  fontWeight: 500,
+                  textTransform: 'none',
                   '&:hover': {
                     color: 'primary.main',
                   },
@@ -151,6 +177,23 @@ const Navbar = () => {
                 {page.name}
               </Button>
             ))}
+            <IconButton 
+              onClick={toggleTheme} 
+              sx={{ 
+                ml: 1,
+                color: 'text.primary',
+                borderRadius: '4px',
+                '&:hover': {
+                  color: 'primary.main',
+                  backgroundColor: 'transparent',
+                },
+                '&:focus': {
+                  outline: 'none',
+                },
+              }}
+            >
+              {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>
